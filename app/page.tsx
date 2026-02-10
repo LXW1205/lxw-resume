@@ -1,11 +1,41 @@
 "use client"
 
 import { Dithering } from "@paper-design/shaders-react"
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import Link from "next/link"
 
 export default function HomePage() {
   const [isDarkMode, setIsDarkMode] = useState(true)
+
+  const ditheringConfig = useMemo(() => {
+    const shapes = ["cat", "circle", "square", "triangle", "star"]
+    const types = ["4x4", "8x8", "2x2"]
+    const pxSizes = [2, 3, 4, 5]
+
+    const randomShape = shapes[Math.floor(Math.random() * shapes.length)]
+    const randomType = types[Math.floor(Math.random() * types.length)]
+    const randomPxSize = pxSizes[Math.floor(Math.random() * pxSizes.length)]
+    const randomRotation = Math.floor(Math.random() * 360)
+    const randomScale = (Math.random() * 0.5 + 0.6).toFixed(2)
+
+    // Random colors for light mode
+    const lightHues = [220, 240, 280, 300, 320, 20, 40, 60]
+    const randomLightHue = lightHues[Math.floor(Math.random() * lightHues.length)]
+
+    // Random colors for dark mode
+    const darkHues = [280, 300, 320, 340, 20, 40, 120, 200]
+    const randomDarkHue = darkHues[Math.floor(Math.random() * darkHues.length)]
+
+    return {
+      shape: randomShape,
+      type: randomType,
+      pxSize: randomPxSize,
+      rotation: randomRotation,
+      scale: parseFloat(randomScale),
+      lightHue: randomLightHue,
+      darkHue: randomDarkHue,
+    }
+  }, [])
 
   return (
     <div className="relative min-h-screen overflow-hidden flex">
@@ -37,8 +67,8 @@ export default function HomePage() {
         <nav className="absolute top-8 left-8">
           <div className="flex space-x-8 text-sm">
             <span className={`font-semibold ${isDarkMode ? "text-white" : "text-black"}`}>home</span>
-            <Link 
-              href="/projects" 
+            <Link
+              href="/projects"
               className={`transition-opacity hover:opacity-60 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
             >
               projects
@@ -50,17 +80,15 @@ export default function HomePage() {
         <div className="flex-1 flex flex-col justify-between">
           {/* Header */}
           <div className="mt-16">
-            <h1 className="text-sm font-mono mb-12 opacity-60">lee.xiu.wei</h1>
+            <h1 className="text-sm font-mono mb-12 opacity-60">lee.xiu.wei.cv</h1>
             <div className="mb-12">
-              <h2 className="text-4xl font-normal mb-2">LEE XIU WEI</h2>
-              <h3 className="text-lg opacity-70">Victor</h3>
-              <p className="text-sm opacity-60 mt-4">Computer Science Student</p>
-              <p className="text-sm opacity-60">Specializing in Software Engineering</p>
+              <h2 className="text-4xl font-normal mb-2">VICTOR LEE</h2>
+              <h2 className="text-3xl font-normal mb-2">ASPIRING SOFTWARE ENGINEER</h2>
             </div>
 
             {/* Bio */}
             <div className="max-w-md space-y-4 text-sm leading-relaxed opacity-80 mb-12">
-              <p>Passionate about learning new technologies and beautiful design.</p>
+              <p>Passionate about learning new technologies and designs.</p>
               <p>Building elegant solutions that solve real problems.</p>
             </div>
           </div>
@@ -71,7 +99,7 @@ export default function HomePage() {
             <div className="space-y-2 text-sm">
               <div>
                 <p className="opacity-60 mb-1">Email</p>
-                <a 
+                <a
                   href="mailto:xiuwei1205@gmail.com"
                   className="hover:opacity-60 transition-opacity"
                 >
@@ -80,7 +108,7 @@ export default function HomePage() {
               </div>
               <div>
                 <p className="opacity-60 mb-1">LinkedIn</p>
-                <a 
+                <a
                   href="https://linkedin.com/in/xiu-wei"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -98,14 +126,14 @@ export default function HomePage() {
         <Dithering
           style={{ height: "100%", width: "100%" }}
           colorBack={isDarkMode ? "hsl(0, 0%, 0%)" : "hsl(0, 0%, 95%)"}
-          colorFront={isDarkMode ? "hsl(320, 100%, 70%)" : "hsl(220, 100%, 70%)"}
-          shape="cat"
-          type="4x4"
-          pxSize={3}
+          colorFront={isDarkMode ? `hsl(${ditheringConfig.darkHue}, 100%, 70%)` : `hsl(${ditheringConfig.lightHue}, 100%, 70%)`}
+          shape={ditheringConfig.shape}
+          type={ditheringConfig.type}
+          pxSize={ditheringConfig.pxSize}
           offsetX={0}
           offsetY={0}
-          scale={0.8}
-          rotation={0}
+          scale={ditheringConfig.scale}
+          rotation={ditheringConfig.rotation}
           speed={0.1}
         />
       </div>
