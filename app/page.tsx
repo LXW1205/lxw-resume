@@ -2,21 +2,21 @@
 
 import { Dithering } from "@paper-design/shaders-react"
 import { useState } from "react"
+import Link from "next/link"
 
-export default function ResumePage() {
+export default function HomePage() {
   const [isDarkMode, setIsDarkMode] = useState(true)
 
   return (
     <div className="relative min-h-screen overflow-hidden flex">
       <div
-        className={`w-1/2 p-8 font-mono relative z-10 ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}
+        className={`w-1/2 p-8 font-mono relative z-10 flex flex-col ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}
       >
         {/* Theme toggle button in top right of left panel */}
         <button
           onClick={() => setIsDarkMode(!isDarkMode)}
-          className={`absolute top-8 right-8 p-2 rounded-full transition-colors ${
-            isDarkMode ? "hover:bg-white/10" : "hover:bg-black/10"
-          }`}
+          className={`absolute top-8 right-8 p-2 rounded-full transition-colors ${isDarkMode ? "hover:bg-white/10" : "hover:bg-black/10"
+            }`}
           aria-label="Toggle theme"
         >
           {isDarkMode ? (
@@ -33,45 +33,63 @@ export default function ResumePage() {
           )}
         </button>
 
-        {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-lg font-normal mb-8">tina.cv</h1>
-          <div className="mb-8">
-            <h2 className="text-lg font-normal">TINA REDACTED</h2>
-            <h3 className="text-lg font-normal">DESIGNER</h3>
+        {/* Navigation */}
+        <nav className="absolute top-8 left-8">
+          <div className="flex space-x-8 text-sm">
+            <span className={`font-semibold ${isDarkMode ? "text-white" : "text-black"}`}>home</span>
+            <Link 
+              href="/projects" 
+              className={`transition-opacity hover:opacity-60 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
+            >
+              projects
+            </Link>
           </div>
-        </div>
+        </nav>
 
-        {/* Experience Section */}
-        <div className="mb-12 space-y-1">
-          <div className="flex">
-            <span className="w-20">Company</span>
-            <span className="mx-2">Intern</span>
-            <span className="mx-4">2022 → ....</span>
-          </div>
-          <div className="flex">
-            <span className="w-20">Company</span>
-            <span className="mx-2">Intern</span>
-            <span className="mx-4">2019 → 2021</span>
-          </div>
-          <div className="flex">
-            <span className="w-20">Company</span>
-            <span className="mx-2">Intern</span>
-            <span className="mx-4">2016 → 2019</span>
-          </div>
-          <div className="flex">
-            <span className="w-20">MISC</span>
-            <span className="mx-4">2012 → 2016</span>
-          </div>
-        </div>
+        {/* Main Content */}
+        <div className="flex-1 flex flex-col justify-between">
+          {/* Header */}
+          <div className="mt-16">
+            <h1 className="text-sm font-mono mb-12 opacity-60">lee.xiu.wei</h1>
+            <div className="mb-12">
+              <h2 className="text-4xl font-normal mb-2">LEE XIU WEI</h2>
+              <h3 className="text-lg opacity-70">Victor</h3>
+              <p className="text-sm opacity-60 mt-4">Computer Science Student</p>
+              <p className="text-sm opacity-60">Specializing in Software Engineering</p>
+            </div>
 
-        {/* Footer Links Section */}
-        <div className="absolute bottom-8 left-8">
-          <div className="flex space-x-4 text-lg font-mono">
-            <span>Links</span>
-            <span>Twitter</span>
-            <span>Email</span>
-            <span>Blog</span>
+            {/* Bio */}
+            <div className="max-w-md space-y-4 text-sm leading-relaxed opacity-80 mb-12">
+              <p>Passionate about learning new technologies and beautiful design.</p>
+              <p>Building elegant solutions that solve real problems.</p>
+            </div>
+          </div>
+
+          {/* Contact Section */}
+          <div className="space-y-6">
+            <div className="border-t border-opacity-20" style={{ borderColor: isDarkMode ? "white" : "black" }}></div>
+            <div className="space-y-2 text-sm">
+              <div>
+                <p className="opacity-60 mb-1">Email</p>
+                <a 
+                  href="mailto:xiuwei1205@gmail.com"
+                  className="hover:opacity-60 transition-opacity"
+                >
+                  xiuwei1205@gmail.com
+                </a>
+              </div>
+              <div>
+                <p className="opacity-60 mb-1">LinkedIn</p>
+                <a 
+                  href="https://linkedin.com/in/xiu-wei"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:opacity-60 transition-opacity"
+                >
+                  linkedin.com/in/xiu-wei
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
