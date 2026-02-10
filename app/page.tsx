@@ -1,41 +1,42 @@
 "use client"
 
 import { Dithering } from "@paper-design/shaders-react"
-import { useState, useMemo } from "react"
+import { useState } from "react"
 import Link from "next/link"
+
+const generateDitheringConfig = () => {
+  const shapes = ["cat", "circle", "square", "triangle", "star"]
+  const types = ["4x4", "8x8", "2x2"]
+  const pxSizes = [2, 3, 4, 5]
+
+  const randomShape = shapes[Math.floor(Math.random() * shapes.length)]
+  const randomType = types[Math.floor(Math.random() * types.length)]
+  const randomPxSize = pxSizes[Math.floor(Math.random() * pxSizes.length)]
+  const randomRotation = Math.floor(Math.random() * 360)
+  const randomScale = (Math.random() * 0.5 + 0.6).toFixed(2)
+
+  // Random colors for light mode
+  const lightHues = [220, 240, 280, 300, 320, 20, 40, 60]
+  const randomLightHue = lightHues[Math.floor(Math.random() * lightHues.length)]
+
+  // Random colors for dark mode
+  const darkHues = [280, 300, 320, 340, 20, 40, 120, 200]
+  const randomDarkHue = darkHues[Math.floor(Math.random() * darkHues.length)]
+
+  return {
+    shape: randomShape,
+    type: randomType,
+    pxSize: randomPxSize,
+    rotation: randomRotation,
+    scale: parseFloat(randomScale),
+    lightHue: randomLightHue,
+    darkHue: randomDarkHue,
+  }
+}
 
 export default function HomePage() {
   const [isDarkMode, setIsDarkMode] = useState(true)
-
-  const ditheringConfig = useMemo(() => {
-    const shapes = ["cat", "circle", "square", "triangle", "star"]
-    const types = ["4x4", "8x8", "2x2"]
-    const pxSizes = [2, 3, 4, 5]
-
-    const randomShape = shapes[Math.floor(Math.random() * shapes.length)]
-    const randomType = types[Math.floor(Math.random() * types.length)]
-    const randomPxSize = pxSizes[Math.floor(Math.random() * pxSizes.length)]
-    const randomRotation = Math.floor(Math.random() * 360)
-    const randomScale = (Math.random() * 0.5 + 0.6).toFixed(2)
-
-    // Random colors for light mode
-    const lightHues = [220, 240, 280, 300, 320, 20, 40, 60]
-    const randomLightHue = lightHues[Math.floor(Math.random() * lightHues.length)]
-
-    // Random colors for dark mode
-    const darkHues = [280, 300, 320, 340, 20, 40, 120, 200]
-    const randomDarkHue = darkHues[Math.floor(Math.random() * darkHues.length)]
-
-    return {
-      shape: randomShape,
-      type: randomType,
-      pxSize: randomPxSize,
-      rotation: randomRotation,
-      scale: parseFloat(randomScale),
-      lightHue: randomLightHue,
-      darkHue: randomDarkHue,
-    }
-  }, [])
+  const [ditheringConfig, setDitheringConfig] = useState(generateDitheringConfig())
 
   return (
     <div className="relative min-h-screen overflow-hidden flex">
@@ -123,6 +124,19 @@ export default function HomePage() {
       </div>
 
       <div className="w-1/2 relative">
+        <button
+          onClick={() => setDitheringConfig(generateDitheringConfig())}
+          className={`absolute top-8 left-8 p-2 rounded-full transition-colors z-20 ${isDarkMode ? "hover:bg-white/10" : "hover:bg-black/10"
+            }`}
+          aria-label="Randomize dithering effect"
+          title="Randomize effect"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M1 4v6h6M23 20v-6h-6" />
+            <path d="M20.49 9A9 9 0 0 0 5.64 5.64M3.51 15A9 9 0 0 0 18.36 18.36" />
+          </svg>
+        </button>
+
         <Dithering
           style={{ height: "100%", width: "100%" }}
           colorBack={isDarkMode ? "hsl(0, 0%, 0%)" : "hsl(0, 0%, 95%)"}
