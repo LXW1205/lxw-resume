@@ -44,22 +44,20 @@ export default function HomePage() {
         className={`w-1/2 p-8 font-mono relative z-10 flex flex-col ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}
       >
         {/* Theme and randomize buttons in top right */}
-        <div className="absolute top-8 right-8 flex flex-col gap-3">
+        <div className="absolute top-8 right-8 flex flex-col gap-3 z-50">
           <button
             onClick={() => setIsDarkMode(!isDarkMode)}
-            className={`flex items-center justify-center w-10 h-10 rounded-full transition-colors ${isDarkMode ? "hover:bg-white/10" : "hover:bg-black/10"
+            className={`flex items-center justify-center w-10 h-10 rounded-full transition-colors relative ${isDarkMode ? "hover:bg-white/10" : "hover:bg-black/10"
               }`}
             aria-label="Toggle theme"
           >
             {isDarkMode ? (
-              // Sun icon for light mode
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="pointer-events-none">
                 <circle cx="12" cy="12" r="5" />
                 <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
               </svg>
             ) : (
-              // Moon icon for dark mode
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="pointer-events-none">
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
               </svg>
             )}
@@ -67,12 +65,12 @@ export default function HomePage() {
           <button
             type="button"
             onClick={() => setDitheringConfig(generateDitheringConfig())}
-            className={`flex items-center justify-center w-10 h-10 rounded-full transition-colors cursor-pointer ${isDarkMode ? "hover:bg-white/10" : "hover:bg-black/10"
+            className={`flex items-center justify-center w-10 h-10 rounded-full transition-colors relative ${isDarkMode ? "hover:bg-white/10" : "hover:bg-black/10"
               }`}
             aria-label="Randomize dithering effect"
             title="Randomize effect"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ pointerEvents: 'none' }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="pointer-events-none">
               <path d="M1 4v6h6M23 20v-6h-6" />
               <path d="M20.49 9A9 9 0 0 0 5.64 5.64M3.51 15A9 9 0 0 0 18.36 18.36" />
             </svg>
@@ -89,6 +87,12 @@ export default function HomePage() {
             >
               projects
             </Link>
+            <Link
+              href="/tech"
+              className={`transition-opacity hover:opacity-60 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}
+            >
+              tech
+            </Link>
           </div>
         </nav>
 
@@ -96,15 +100,15 @@ export default function HomePage() {
         <div className="flex-1 flex flex-col justify-between">
           {/* Header */}
           <div className="mt-16">
-            <h1 className="text-sm font-mono mb-12 opacity-60">lee.xiu.wei.cv</h1>
-            <div className="mb-12">
-              <h2 className="text-4xl font-normal mb-2">VICTOR LEE</h2>
-              <h2 className="text-3xl font-normal mb-2">ASPIRING SOFTWARE ENGINEER</h2>
+            <h1 className="text-base font-mono mb-12 opacity-60">lee.xiu.wei.cv</h1>
+            <div className="flex-1 flex flex-col mt-16">
+              <h1 className="text-6xl font-normal mb-4">VICTOR LEE</h1>
+              <h2 className="text-4xl font-normal mb-8">ASPIRING SOFTWARE ENGINEER</h2>
             </div>
 
             {/* Bio */}
-            <div className="max-w-md space-y-4 text-sm leading-relaxed opacity-80 mb-12">
-              <p>Passionate about learning new technologies and designs.</p>
+            <div className="max-w-xl space-y-6 text-base leading-relaxed opacity-80 mb-16">
+              <p>Passionate about learning new technologies and beautiful designs.</p>
               <p>Building elegant solutions that solve real problems.</p>
             </div>
           </div>
@@ -112,9 +116,9 @@ export default function HomePage() {
           {/* Contact Section */}
           <div className="space-y-6">
             <div className="border-t border-opacity-20" style={{ borderColor: isDarkMode ? "white" : "black" }}></div>
-            <div className="space-y-2 text-sm">
+            <div className="space-y-4 text-base">
               <div>
-                <p className="opacity-60 mb-1">Email</p>
+                <p className="opacity-60 mb-2">Email</p>
                 <a
                   href="mailto:xiuwei1205@gmail.com"
                   className="hover:opacity-60 transition-opacity"
@@ -123,7 +127,18 @@ export default function HomePage() {
                 </a>
               </div>
               <div>
-                <p className="opacity-60 mb-1">LinkedIn</p>
+                <p className="opacity-60 mb-2">GitHub</p>
+                <a
+                  href="https://github.com/LXW1205"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:opacity-60 transition-opacity"
+                >
+                  github.com/LXW1205
+                </a>
+              </div>
+              <div>
+                <p className="opacity-60 mb-2">LinkedIn</p>
                 <a
                   href="https://linkedin.com/in/xiu-wei"
                   target="_blank"
