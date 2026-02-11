@@ -1,13 +1,14 @@
 "use client"
 
 import { Dithering } from "@paper-design/shaders-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useTheme } from "next-themes"
 import React from "react"
 import Link from "next/link"
 
 const generateDitheringConfig = () => {
-  const shapes = ["cat", "circle", "square", "triangle", "star"]
-  const types = ["4x4", "8x8", "2x2"]
+  const shapes = ["simplex", "warp", "dots", "wave", "ripple", "swirl", "sphere"] as const
+  const types = ["4x4", "8x8", "2x2", "random"] as const
   const pxSizes = [2, 3, 4, 5]
 
   const randomShape = shapes[Math.floor(Math.random() * shapes.length)]
@@ -36,8 +37,15 @@ const generateDitheringConfig = () => {
 }
 
 export default function ProjectsPage() {
-  const [isDarkMode, setIsDarkMode] = useState(true)
+  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
   const [ditheringConfig, setDitheringConfig] = useState(generateDitheringConfig())
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const isDarkMode = theme === "dark"
   const [hoveredProjectIndex, setHoveredProjectIndex] = useState<number | null>(null)
   const [selectedProjectIndex, setSelectedProjectIndex] = useState<number | null>(null)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
@@ -118,16 +126,20 @@ export default function ProjectsPage() {
     }
   }, [selectedProject, isCarouselHovered])
 
+  if (!mounted) {
+    return null
+  }
+
   return (
-    <div className="relative min-h-screen overflow-hidden flex">
-      {/* Left Side - Scrollable */}
+    <div className="relative min-h-screen overflow-hidden flex flex-col lg:flex-row">
+      {/* Left Side - Content */}
       <div
-        className={`w-1/2 p-8 font-mono relative z-10 flex flex-col overflow-y-auto h-screen ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}
+        className={`w-full lg:w-1/2 p-8 font-mono relative z-10 flex flex-col min-h-screen ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}
       >
         {/* Theme and randomize buttons in top right */}
         <div className="absolute top-8 right-8 flex flex-col gap-3 z-50">
           <button
-            onClick={() => setIsDarkMode(!isDarkMode)}
+            onClick={() => setTheme(isDarkMode ? "light" : "dark")}
             className={`flex items-center justify-center w-10 h-10 rounded-full transition-colors relative ${isDarkMode ? "hover:bg-white/10" : "hover:bg-black/10"
               }`}
             aria-label="Toggle theme"
@@ -272,8 +284,8 @@ export default function ProjectsPage() {
         </div>
       </div>
 
-      {/* Right Side - Fixed Dithering + Carousel */}
-      <div className="w-1/2 relative h-screen fixed right-0 top-0">
+      {/* Right Side - Visuals (Dithering + Carousel) */}
+      <div className="w-full lg:w-1/2 relative h-[60vh] lg:h-screen lg:fixed lg:right-0 lg:top-0 lg:z-0">
         <Dithering
           style={{ height: "100%", width: "100%" }}
           colorBack={isDarkMode ? "hsl(0, 0%, 0%)" : "hsl(0, 0%, 95%)"}

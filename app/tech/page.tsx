@@ -1,12 +1,13 @@
 "use client"
 
 import { Dithering } from "@paper-design/shaders-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useTheme } from "next-themes"
 import Link from "next/link"
 
 const generateDitheringConfig = () => {
-    const shapes = ["cat", "circle", "square", "triangle", "star"]
-    const types = ["4x4", "8x8", "2x2"]
+    const shapes = ["simplex", "warp", "dots", "wave", "ripple", "swirl", "sphere"] as const
+    const types = ["4x4", "8x8", "2x2", "random"] as const
     const pxSizes = [2, 3, 4, 5]
 
     const randomShape = shapes[Math.floor(Math.random() * shapes.length)]
@@ -35,8 +36,19 @@ const generateDitheringConfig = () => {
 }
 
 export default function TechPage() {
-    const [isDarkMode, setIsDarkMode] = useState(true)
+    const { theme, setTheme } = useTheme()
+    const [mounted, setMounted] = useState(false)
     const [ditheringConfig, setDitheringConfig] = useState(generateDitheringConfig())
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
+
+    const isDarkMode = theme === "dark"
+
+    if (!mounted) {
+        return null
+    }
 
     const techStack = [
         { name: "HTML5", badge: "https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white" },
@@ -67,14 +79,14 @@ export default function TechPage() {
     ]
 
     return (
-        <div className="relative min-h-screen overflow-hidden flex">
+        <div className="relative min-h-screen overflow-hidden flex flex-col lg:flex-row">
             <div
-                className={`w-1/2 p-8 font-mono relative z-10 flex flex-col ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}
+                className={`w-full lg:w-1/2 p-8 font-mono relative z-10 flex flex-col min-h-screen ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}
             >
                 {/* Theme and randomize buttons in top right */}
                 <div className="absolute top-8 right-8 flex flex-col gap-3 z-50">
                     <button
-                        onClick={() => setIsDarkMode(!isDarkMode)}
+                        onClick={() => setTheme(isDarkMode ? "light" : "dark")}
                         className={`flex items-center justify-center w-10 h-10 rounded-full transition-colors relative ${isDarkMode ? "hover:bg-white/10" : "hover:bg-black/10"
                             }`}
                         aria-label="Toggle theme"
@@ -208,7 +220,7 @@ export default function TechPage() {
                 </div>
             </div>
 
-            <div className="w-1/2 relative">
+            <div className="w-full lg:w-1/2 relative h-[40vh] lg:h-auto">
                 <Dithering
                     style={{ height: "100%", width: "100%" }}
                     colorBack={isDarkMode ? "hsl(0, 0%, 0%)" : "hsl(0, 0%, 95%)"}
