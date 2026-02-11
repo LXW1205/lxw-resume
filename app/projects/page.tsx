@@ -2,6 +2,7 @@
 
 import { Dithering } from "@paper-design/shaders-react"
 import { useState } from "react"
+import React from "react"
 import Link from "next/link"
 
 const generateDitheringConfig = () => {
@@ -37,32 +38,91 @@ const generateDitheringConfig = () => {
 export default function ProjectsPage() {
   const [isDarkMode, setIsDarkMode] = useState(true)
   const [ditheringConfig, setDitheringConfig] = useState(generateDitheringConfig())
+  const [hoveredProjectIndex, setHoveredProjectIndex] = useState<number | null>(null)
+  const [selectedProjectIndex, setSelectedProjectIndex] = useState<number | null>(null)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [isCarouselHovered, setIsCarouselHovered] = useState(false)
 
   const projects = [
     {
-      title: "Project Title",
-      description: "Brief description of your project and its impact.",
-      technologies: ["React", "TypeScript", "Tailwind"],
-      link: "#"
+      title: "Digital Scholarship and Tracking System",
+      description: "A comprehensive platform for managing scholarship applications, tracking student eligibility, and automating award distribution workflows.",
+      technologies: ["HTML", "TailwindCSS", "Java", "PostgreSQL"],
+      link: "#",
+      images: [
+        "/screenshots/scholarship-system-1.png",
+        "/screenshots/scholarship-system-2.png",
+        "/screenshots/scholarship-system-3.png"
+      ]
     },
     {
-      title: "Another Project",
-      description: "What you built and what technologies you used.",
-      technologies: ["Next.js", "Node.js", "PostgreSQL"],
-      link: "#"
+      title: "Database of Cinema Ticketing System",
+      description: "Designed and implemented a relational database schema for managing movie screenings, ticket reservations, and customer transactions.",
+      technologies: ["PostgreSQL"],
+      link: "#",
+      images: [
+        "/screenshots/cinema-db-1.png",
+        "/screenshots/cinema-db-2.png",
+        "/screenshots/cinema-db-3.png"
+      ]
     },
     {
-      title: "Side Project",
-      description: "An interesting project that showcases your skills.",
-      technologies: ["Python", "FastAPI", "React"],
-      link: "#"
+      title: "Parking Lot System",
+      description: "Object-oriented parking management system featuring real-time spot tracking, automated billing, and receipt generation.",
+      technologies: ["Java"],
+      link: "#",
+      images: [
+        "/screenshots/parking-system-1.png",
+        "/screenshots/parking-system-2.png",
+        "/screenshots/parking-system-3.png"
+      ]
+    },
+    {
+      title: "MixToolz",
+      description: "A web-based toolbox featuring multiple utility applications with an intuitive interface and responsive design.",
+      technologies: ["HTML", "CSS", "JavaScript"],
+      link: "#",
+      images: [
+        "/screenshots/mixtools-1.png",
+        "/screenshots/mixtools-2.png",
+        "/screenshots/mixtools-3.png"
+      ]
+    },
+    {
+      title: "Seminar Management System",
+      description: "Desktop application for coordinating seminar schedules, managing speaker assignments, and tracking attendee registrations.",
+      technologies: ["Java"],
+      link: "#",
+      images: [
+        "/screenshots/seminar-system-1.png",
+        "/screenshots/seminar-system-2.png",
+        "/screenshots/seminar-system-3.png"
+      ]
     }
   ]
 
+  const selectedProject = selectedProjectIndex !== null ? projects[selectedProjectIndex] : null
+
+  // Reset image index when selecting a different project
+  React.useEffect(() => {
+    setCurrentImageIndex(0)
+  }, [selectedProjectIndex])
+
+  // Auto-scroll effect for carousel
+  React.useEffect(() => {
+    if (selectedProject && !isCarouselHovered && selectedProject.images.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentImageIndex((prev) => (prev + 1) % selectedProject.images.length)
+      }, 3000) // 3 seconds auto-scroll
+      return () => clearInterval(interval)
+    }
+  }, [selectedProject, isCarouselHovered])
+
   return (
     <div className="relative min-h-screen overflow-hidden flex">
+      {/* Left Side - Scrollable */}
       <div
-        className={`w-1/2 p-8 font-mono relative z-10 flex flex-col ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}
+        className={`w-1/2 p-8 font-mono relative z-10 flex flex-col overflow-y-auto h-screen ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}
       >
         {/* Theme and randomize buttons in top right */}
         <div className="absolute top-8 right-8 flex flex-col gap-3 z-50">
@@ -120,15 +180,28 @@ export default function ProjectsPage() {
         {/* Main Content */}
         <div className="flex-1 flex flex-col mt-16">
           <h1 className="text-4xl font-normal mb-2">Notable Projects</h1>
-          <p className="text-sm opacity-60 mb-12">Showcasing my work and technical expertise</p>
+          <p className="text-sm opacity-60 mb-12">Showcasing my academic work and technical expertise</p>
 
-          {/* Projects Grid */}
+          {/* Projects List */}
           <div className="space-y-8 flex-1">
             {projects.map((project, index) => (
               <div
                 key={index}
-                className={`border-l-2 pl-6 py-4 transition-opacity hover:opacity-70 ${isDarkMode ? "border-gray-700" : "border-gray-300"
+                className={`border-l-2 pl-6 py-4 transition-all cursor-pointer ${selectedProjectIndex === index
+                  ? isDarkMode
+                    ? "border-white"
+                    : "border-black"
+                  : hoveredProjectIndex === index
+                    ? isDarkMode
+                      ? "border-gray-500"
+                      : "border-gray-500"
+                    : isDarkMode
+                      ? "border-gray-700"
+                      : "border-gray-300"
                   }`}
+                onClick={() => setSelectedProjectIndex(index)}
+                onMouseEnter={() => setHoveredProjectIndex(index)}
+                onMouseLeave={() => setHoveredProjectIndex(null)}
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
@@ -160,7 +233,7 @@ export default function ProjectsPage() {
           </div>
 
           {/* Contact Section */}
-          <div className="space-y-6">
+          <div className="space-y-6 pb-8">
             <div className="border-t border-opacity-20" style={{ borderColor: isDarkMode ? "white" : "black" }}></div>
             <div className="space-y-4 text-base">
               <div>
@@ -199,7 +272,8 @@ export default function ProjectsPage() {
         </div>
       </div>
 
-      <div className="w-1/2 relative">
+      {/* Right Side - Fixed Dithering + Carousel */}
+      <div className="w-1/2 relative h-screen fixed right-0 top-0">
         <Dithering
           style={{ height: "100%", width: "100%" }}
           colorBack={isDarkMode ? "hsl(0, 0%, 0%)" : "hsl(0, 0%, 95%)"}
@@ -213,6 +287,56 @@ export default function ProjectsPage() {
           rotation={ditheringConfig.rotation}
           speed={0.1}
         />
+
+        {/* Carousel Overlay */}
+        {selectedProject && (
+          <div
+            className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ${selectedProject ? "opacity-100" : "opacity-0"
+              }`}
+            onMouseEnter={() => setIsCarouselHovered(true)}
+            onMouseLeave={() => setIsCarouselHovered(false)}
+            style={{ width: "95%", maxWidth: "1000px" }}
+          >
+            <div
+              className="relative rounded-lg overflow-hidden shadow-2xl"
+              style={{ aspectRatio: "16/9" }}
+            >
+              {/* Images */}
+              <div className="relative w-full h-full overflow-hidden">
+                {selectedProject.images.map((img, imgIdx) => (
+                  <div
+                    key={imgIdx}
+                    className="absolute inset-0 transition-transform duration-700 ease-in-out"
+                    style={{
+                      transform: `translateY(${(imgIdx - currentImageIndex) * 100}%)`
+                    }}
+                  >
+                    <img
+                      src={img}
+                      alt={`${selectedProject.title} screenshot ${imgIdx + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Navigation Dots */}
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
+                {selectedProject.images.map((_, imgIdx) => (
+                  <button
+                    key={imgIdx}
+                    onClick={() => setCurrentImageIndex(imgIdx)}
+                    className={`w-2 h-2 rounded-full transition-all ${imgIdx === currentImageIndex
+                      ? "bg-white w-4 shadow-lg"
+                      : "bg-white/40 hover:bg-white/60"
+                      }`}
+                    aria-label={`View screenshot ${imgIdx + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
