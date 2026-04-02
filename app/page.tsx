@@ -115,7 +115,7 @@ export default function HomePage() {
             <h1 className="text-base font-mono mb-12 opacity-60">lee.xiu.wei.cv</h1>
             <div className="flex-1 flex flex-col mt-16">
               <h1 className="text-6xl font-normal mb-4">VICTOR LEE</h1>
-              <h2 className="text-4xl font-normal mb-8">ASPIRING SOFTWARE ENGINEER</h2>
+              <h2 className="text-4xl font-normal mb-8">ASPIRING SOFTWARE DEVELOPER</h2>
             </div>
 
             {/* Bio */}
