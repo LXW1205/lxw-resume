@@ -32,7 +32,7 @@ export const academicProjects: Project[] = [
     {
         title: "Parking Lot System",
         description: "Object-oriented parking management system featuring real-time spot tracking, automated billing, and receipt generation.",
-        technologies: ["Java"],
+        technologies: ["Java", "PostgreSQL"],
         link: "#",
         images: [
             "/screenshots/parking-system-1.png",
@@ -43,7 +43,7 @@ export const academicProjects: Project[] = [
     {
         title: "Seminar Management System",
         description: "Desktop application for coordinating seminar schedules, managing speaker assignments, and tracking attendee registrations.",
-        technologies: ["Java"],
+        technologies: ["Java", "PostgreSQL"],
         link: "#",
         images: [
             "/screenshots/seminar-system-1.png",
