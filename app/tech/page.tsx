@@ -5,6 +5,8 @@ import { useState, useEffect } from "react"
 import { useTheme } from "next-themes"
 import Link from "next/link"
 
+import TechStack from "./components/TechStack"
+
 const generateDitheringConfig = () => {
     const shapes = ["simplex", "warp", "dots", "wave", "ripple", "swirl", "sphere"] as const
     const types = ["4x4", "8x8", "2x2", "random"] as const
@@ -50,33 +52,7 @@ export default function TechPage() {
         return null
     }
 
-    const techStack = [
-        { name: "HTML5", badge: "https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white" },
-        { name: "CSS3", badge: "https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white" },
-        { name: "TailwindCSS", badge: "https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" },
-        { name: "JavaScript", badge: "https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" },
-        { name: "React", badge: "https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" },
-        { name: "React Native", badge: "https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" },
-        { name: "Node.js", badge: "https://img.shields.io/badge/node.js-%2333993D.svg?style=for-the-badge&logo=node.js&logoColor=white" },
-        { name: "Python", badge: "https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" },
-        { name: "C++", badge: "https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=cplusplus&logoColor=white" },
-        { name: "PostgreSQL", badge: "https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" },
-        { name: "Java", badge: "https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white" }
-    ]
 
-    const design = [
-        { name: "Canva", badge: "https://img.shields.io/badge/Canva-%2300C4CC.svg?style=for-the-badge&logo=Canva&logoColor=white" },
-        { name: "Figma", badge: "https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white" },
-        { name: "Gimp", badge: "https://img.shields.io/badge/Gimp-657D8B?style=for-the-badge&logo=gimp&logoColor=FFFFFF" },
-        { name: "LaTeX", badge: "https://img.shields.io/badge/latex-%23008080.svg?style=for-the-badge&logo=latex&logoColor=white" },
-    ]
-
-    const devOps = [
-        { name: "Git", badge: "https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white" },
-        { name: "Docker", badge: "https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" },
-        { name: "Nginx Proxy Manager", badge: "https://img.shields.io/badge/nginx_proxy_manager-%23F15833.svg?style=for-the-badge&logo=nginxproxymanager&logoColor=white" },
-        { name: "Portainer", badge: "https://img.shields.io/badge/portainer-%2313BEF9.svg?style=for-the-badge&logo=portainer&logoColor=white" },
-    ]
 
     return (
         <div className="relative min-h-screen overflow-hidden flex flex-col lg:flex-row">
@@ -118,7 +94,7 @@ export default function TechPage() {
                 </div>
 
                 {/* Navigation */}
-                <nav className="absolute top-8 left-8">
+                <nav className="absolute top-8 left-8 flex flex-col gap-5">
                     <div className="flex space-x-8 text-sm">
                         <Link
                             href="/"
@@ -134,50 +110,17 @@ export default function TechPage() {
                         </Link>
                         <span className={`font-semibold ${isDarkMode ? "text-white" : "text-black"}`}>tech</span>
                     </div>
+                    <div className="flex space-x-6 text-sm opacity-60">
+                        <span>Technologies and tools I work with</span>
+                    </div>
                 </nav>
 
                 {/* Main Content */}
-                <div className="flex-1 flex flex-col mt-16">
-                    <h1 className="text-4xl font-normal mb-2">Tech Stack</h1>
-                    <p className="text-sm opacity-60 mb-12">Technologies and tools I work with</p>
+                <div className="flex-1 flex flex-col mt-36">
 
                     {/* Tech Categories */}
-                    <div className="space-y-12 flex-1">
-                        {/* Tech Stack */}
-                        <div>
-                            <h2 className="text-xl font-normal mb-4 flex items-center gap-2">
-                                <span>Tech Stack</span>
-                            </h2>
-                            <div className="flex flex-wrap gap-3">
-                                {techStack.map((tech, index) => (
-                                    <img key={index} src={tech.badge} alt={tech.name} className="h-7" />
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Design */}
-                        <div>
-                            <h2 className="text-xl font-normal mb-4 flex items-center gap-2">
-                                <span>Design</span>
-                            </h2>
-                            <div className="flex flex-wrap gap-3">
-                                {design.map((tool, index) => (
-                                    <img key={index} src={tool.badge} alt={tool.name} className="h-7" />
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* DevOps / Tools */}
-                        <div>
-                            <h2 className="text-xl font-normal mb-4 flex items-center gap-2">
-                                <span>DevOps / Tools</span>
-                            </h2>
-                            <div className="flex flex-wrap gap-3">
-                                {devOps.map((tool, index) => (
-                                    <img key={index} src={tool.badge} alt={tool.name} className="h-7" />
-                                ))}
-                            </div>
-                        </div>
+                    <div className="space-y-12 flex-1 relative z-10 w-full mb-10">
+                        <TechStack />
                     </div>
 
                     {/* Contact Section */}

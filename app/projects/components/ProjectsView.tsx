@@ -201,6 +201,11 @@ export default function ProjectsView({ title, description, projects, activeTab }
                                                 </span>
                                             ))}
                                         </div>
+                                        {selectedProjectIndex === index && project.longDescription && (
+                                            <div className={`mt-6 text-sm opacity-80 leading-relaxed whitespace-pre-line transition-all duration-300 animate-in fade-in slide-in-from-top-2 ${isDarkMode ? "text-gray-300" : "text-gray-700"}`}>
+                                                {project.longDescription}
+                                            </div>
+                                        )}
                                     </div>
                                     <a
                                         href={project.link}
