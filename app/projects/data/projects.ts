@@ -12,8 +12,8 @@ export const academicProjects: Project[] = [
         title: "Digital Scholarship and Tracking System",
         description: "A comprehensive platform for managing scholarship applications, tracking student eligibility, and automating award distribution workflows.",
         technologies: ["HTML", "TailwindCSS", "Java", "PostgreSQL"],
-        deployUrl: "https://scholarship-system.onrender.com",
-        githubUrl: "https://github.com/LXW1205/scholarship-system",
+        deployUrl: "https://sef-scholarship-system.onrender.com",
+        githubUrl: "https://github.com/LXW1205/sef_scholarship_system",
         images: [
             "/screenshots/scholarship-system-1.png",
             "/screenshots/scholarship-system-2.png",
@@ -24,7 +24,6 @@ export const academicProjects: Project[] = [
         title: "Database of Cinema Ticketing System",
         description: "Designed and implemented a relational database schema for managing movie screenings, ticket reservations, and customer transactions.",
         technologies: ["PostgreSQL"],
-        githubUrl: "https://github.com/LXW1205/cinema-ticketing-db",
         images: [
             "/screenshots/cinema-db-1.png",
             "/screenshots/cinema-db-2.png",
@@ -35,7 +34,7 @@ export const academicProjects: Project[] = [
         title: "Parking Lot System",
         description: "Object-oriented parking management system featuring real-time spot tracking, automated billing, and receipt generation.",
         technologies: ["Java", "PostgreSQL"],
-        githubUrl: "https://github.com/LXW1205/parking-lot-system",
+        githubUrl: "https://github.com/LXW1205/ooad_parking_lot",
         images: [
             "/screenshots/parking-system-1.png",
             "/screenshots/parking-system-2.png",
@@ -46,7 +45,7 @@ export const academicProjects: Project[] = [
         title: "Seminar Management System",
         description: "Desktop application for coordinating seminar schedules, managing speaker assignments, and tracking attendee registrations.",
         technologies: ["Java", "PostgreSQL"],
-        githubUrl: "https://github.com/LXW1205/seminar-management",
+        githubUrl: "https://github.com/LXW1205/ooad_lab_seminar",
         images: [
             "/screenshots/seminar-system-1.png",
             "/screenshots/seminar-system-2.png",
@@ -70,7 +69,7 @@ export const academicProjects: Project[] = [
 export const personalProjects: Project[] = [
     {
         title: "Self-hosted Home Server",
-        description: "",
+        description: "Designed and deployed a self-hosted homelab using Docker to manage multiple containerized services. Mainly for media server and personal projects.",
         technologies: ["Ubuntu", "Docker", "Portainer", "Nginx", "PostgreSQL", "Redis"],
         images: [
             "/screenshots/homelab-1.png",
