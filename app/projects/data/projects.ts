@@ -21,16 +21,6 @@ export const academicProjects: Project[] = [
         ]
     },
     {
-        title: "Database of Cinema Ticketing System",
-        description: "Designed and implemented a relational database schema for managing movie screenings, ticket reservations, and customer transactions.",
-        technologies: ["PostgreSQL"],
-        images: [
-            "/screenshots/cinema-db-1.png",
-            "/screenshots/cinema-db-2.png",
-            "/screenshots/cinema-db-3.png"
-        ]
-    },
-    {
         title: "Parking Lot System",
         description: "Object-oriented parking management system featuring real-time spot tracking, automated billing, and receipt generation.",
         technologies: ["Java", "PostgreSQL"],
@@ -62,6 +52,16 @@ export const academicProjects: Project[] = [
             "/screenshots/mixtools-1.png",
             "/screenshots/mixtools-2.png",
             "/screenshots/mixtools-3.png"
+        ]
+    },
+    {
+        title: "Database of Cinema Ticketing System",
+        description: "Designed and implemented a relational database schema for managing movie screenings, ticket reservations, and customer transactions.",
+        technologies: ["PostgreSQL"],
+        images: [
+            "/screenshots/cinema-db-1.png",
+            "/screenshots/cinema-db-2.png",
+            "/screenshots/cinema-db-3.png"
         ]
     }
 ];
