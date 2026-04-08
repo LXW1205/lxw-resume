@@ -116,7 +116,7 @@ export default function TechPage() {
                 </nav>
 
                 {/* Main Content */}
-                <div className="flex-1 flex flex-col mt-36">
+                <div className="flex-1 flex flex-col mt-24">
 
                     {/* Tech Categories */}
                     <div className="space-y-12 flex-1 relative z-10 w-full mb-10">

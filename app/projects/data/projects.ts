@@ -1,7 +1,6 @@
 export type Project = {
     title: string;
     description: string;
-    longDescription?: string;
     technologies: string[];
     link: string;
     images: string[];
@@ -11,7 +10,6 @@ export const academicProjects: Project[] = [
     {
         title: "Digital Scholarship and Tracking System",
         description: "A comprehensive platform for managing scholarship applications, tracking student eligibility, and automating award distribution workflows.",
-        longDescription: "",
         technologies: ["HTML", "TailwindCSS", "Java", "PostgreSQL"],
         link: "#",
         images: [
@@ -23,7 +21,6 @@ export const academicProjects: Project[] = [
     {
         title: "Database of Cinema Ticketing System",
         description: "Designed and implemented a relational database schema for managing movie screenings, ticket reservations, and customer transactions.",
-        longDescription: "",
         technologies: ["PostgreSQL"],
         link: "#",
         images: [
@@ -35,7 +32,6 @@ export const academicProjects: Project[] = [
     {
         title: "Parking Lot System",
         description: "Object-oriented parking management system featuring real-time spot tracking, automated billing, and receipt generation.",
-        longDescription: "",
         technologies: ["Java", "PostgreSQL"],
         link: "#",
         images: [
@@ -47,7 +43,6 @@ export const academicProjects: Project[] = [
     {
         title: "Seminar Management System",
         description: "Desktop application for coordinating seminar schedules, managing speaker assignments, and tracking attendee registrations.",
-        longDescription: "",
         technologies: ["Java", "PostgreSQL"],
         link: "#",
         images: [
@@ -59,7 +54,6 @@ export const academicProjects: Project[] = [
     {
         title: "MixToolz",
         description: "A web-based toolbox featuring multiple utility applications with an intuitive interface and responsive design.",
-        longDescription: "",
         technologies: ["HTML", "CSS", "JavaScript"],
         link: "https://mixtoolz.vercel.app/",
         images: [
@@ -74,7 +68,6 @@ export const personalProjects: Project[] = [
     {
         title: "Self-hosted Home Server",
         description: "",
-        longDescription: "",
         technologies: ["Ubuntu", "Docker", "Portainer", "Nginx", "PostgreSQL", "Redis"],
         link: "https://lxw-resume.vercel.app/",
         images: [

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useTheme } from 'next-themes';
 
 type Skill = { name: string; color: string };
 type Section = { label: string; accent: string; skills: Skill[] };
@@ -14,7 +15,6 @@ const SECTIONS: Section[] = [
       { name: 'Python', color: '#4b8bbe' },
       { name: 'Java', color: '#b07219' },
       { name: 'C++', color: '#659bd3' },
-      { name: 'SQL', color: '#336791' },
     ],
   },
   {
@@ -22,16 +22,34 @@ const SECTIONS: Section[] = [
     accent: '#a855f7',
     skills: [
       { name: 'React', color: '#61dafb' },
-      { name: 'HTML', color: '#e34c26' },
-      { name: 'CSS', color: '#1572B6' },
-      { name: 'Tailwind', color: '#38bdf8' },
+      { name: 'HTML5', color: '#e34c26' },
+      { name: 'CSS3', color: '#1572B6' },
+      { name: 'Tailwind CSS', color: '#38bdf8' },
     ],
   },
   {
     label: 'Backend',
     accent: '#22d3ee',
     skills: [
+      { name: 'Java', color: '#b07219' },
       { name: 'Node.js', color: '#33993D' },
+      { name: 'Express.js', color: '#888888' },
+    ],
+  },
+  {
+    label: 'Database',
+    accent: '#f59e0b',
+    skills: [
+      { name: 'SQL', color: '#336791' },
+      { name: 'PostgreSQL', color: '#336791' },
+    ],
+  },
+  {
+    label: 'Design',
+    accent: '#ec4899',
+    skills: [
+      { name: 'Figma', color: '#a259ff' },
+      { name: 'Canva', color: '#00C4CC' },
     ],
   },
   {
@@ -44,9 +62,17 @@ const SECTIONS: Section[] = [
       { name: 'Linux', color: '#fcc624' },
     ],
   },
+  {
+    label: 'Cloud & Deployment',
+    accent: '#3b82f6',
+    skills: [
+      { name: 'Render', color: '#46E3B7' },
+      { name: 'Vercel', color: '#ffffff' },
+    ],
+  },
 ];
 
-function Chip({ skill, delay }: { skill: Skill; delay: number }) {
+function Chip({ skill, delay, isDarkMode }: { skill: Skill; delay: number; isDarkMode: boolean }) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -54,37 +80,45 @@ function Chip({ skill, delay }: { skill: Skill; delay: number }) {
     return () => clearTimeout(t);
   }, [delay]);
 
+  const defaultBorder = isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.15)';
+  const defaultBg = isDarkMode ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.02)';
+  const defaultText = isDarkMode ? '#ccc' : '#666';
+
+  const hoverBorder = isDarkMode ? 'rgba(255,255,255,0.35)' : 'rgba(0,0,0,0.3)';
+  const hoverBg = isDarkMode ? 'rgba(255,255,255,0.09)' : 'rgba(0,0,0,0.06)';
+  const hoverText = isDarkMode ? '#fff' : '#000';
+
   return (
     <div
       style={{
         display: 'inline-flex',
         alignItems: 'center',
         gap: '7px',
-        padding: '10px 20px',
+        padding: '9px 18px',
         borderRadius: '6px',
-        border: '1px solid rgba(255,255,255,0.1)',
-        background: 'rgba(255,255,255,0.04)',
-        fontSize: '14px',
-        color: '#ccc',
+        border: `1px solid ${defaultBorder}`,
+        background: defaultBg,
+        fontSize: '13px',
+        color: defaultText,
         fontFamily: "'Space Mono', monospace",
         cursor: 'default',
-        transition: 'opacity 0.35s ease, transform 0.35s ease',
+        transition: 'opacity 0.35s ease, transform 0.35s ease, border-color 0.35s ease, background-color 0.35s ease, color 0.35s ease',
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateX(0)' : 'translateX(-12px)',
       }}
       onMouseEnter={e => {
         const el = e.currentTarget as HTMLDivElement;
-        el.style.borderColor = 'rgba(255,255,255,0.35)';
-        el.style.background = 'rgba(255,255,255,0.09)';
-        el.style.color = '#fff';
+        el.style.borderColor = hoverBorder;
+        el.style.background = hoverBg;
+        el.style.color = hoverText;
         el.style.transform = 'translateY(-2px) scale(1.03)';
-        el.style.boxShadow = '0 6px 24px -6px rgba(0,0,0,0.5)';
+        el.style.boxShadow = isDarkMode ? '0 6px 24px -6px rgba(0,0,0,0.5)' : '0 6px 24px -6px rgba(0,0,0,0.1)';
       }}
       onMouseLeave={e => {
         const el = e.currentTarget as HTMLDivElement;
-        el.style.borderColor = 'rgba(255,255,255,0.1)';
-        el.style.background = 'rgba(255,255,255,0.04)';
-        el.style.color = '#ccc';
+        el.style.borderColor = defaultBorder;
+        el.style.background = defaultBg;
+        el.style.color = defaultText;
         el.style.transform = 'translateX(0)';
         el.style.boxShadow = 'none';
       }}
@@ -99,8 +133,8 @@ function Dot({ color }: { color: string }) {
   return (
     <span
       style={{
-        width: '10px',
-        height: '10px',
+        width: '9px',
+        height: '9px',
         borderRadius: '50%',
         background: color,
         flexShrink: 0,
@@ -112,6 +146,8 @@ function Dot({ color }: { color: string }) {
 }
 
 export default function TechStack() {
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
   const scanRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -126,39 +162,19 @@ export default function TechStack() {
 
       <div
         style={{
-          background: '#0a0a0a',
-          padding: '2.5rem 3rem 4rem 3rem',
-          borderRadius: '16px',
           position: 'relative',
-          overflow: 'hidden',
+          paddingBottom: '2rem',
           fontFamily: "'Space Mono', monospace",
         }}
       >
 
-        {/* Watermark */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '-10px',
-            right: '-8px',
-            fontSize: '120px',
-            fontWeight: 900,
-            color: 'rgba(255,255,255,0.025)',
-            letterSpacing: '-6px',
-            pointerEvents: 'none',
-            lineHeight: 1,
-          }}
-        >
-          SKILLS
-        </div>
-
         {SECTIONS.map((section, si) => (
           <div key={section.label} style={{ marginBottom: si < SECTIONS.length - 1 ? '2rem' : 0 }}>
             {/* Section header */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '1.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '1.25rem' }}>
               <div
                 style={{
-                  width: '24px',
+                  width: '20px',
                   height: '2px',
                   borderRadius: '2px',
                   background: section.accent,
@@ -167,10 +183,10 @@ export default function TechStack() {
               />
               <span
                 style={{
-                  fontSize: '13px',
+                  fontSize: '12px',
                   letterSpacing: '0.22em',
                   textTransform: 'uppercase',
-                  color: '#888',
+                  color: isDarkMode ? '#888' : '#777',
                 }}
               >
                 {section.label}
@@ -190,7 +206,8 @@ export default function TechStack() {
                 <Chip
                   key={skill.name}
                   skill={skill}
-                  delay={si * 300 + 100 + i * 70}
+                  delay={si * 200 + 100 + i * 50}
+                  isDarkMode={isDarkMode}
                 />
               ))}
             </div>
