@@ -6,41 +6,14 @@ import { useTheme } from "next-themes"
 import Link from "next/link"
 
 import TechStack from "./components/TechStack"
-
-const generateDitheringConfig = () => {
-    const shapes = ["simplex", "warp", "dots", "wave", "ripple", "swirl", "sphere"] as const
-    const types = ["4x4", "8x8", "2x2", "random"] as const
-    const pxSizes = [2, 3, 4, 5]
-
-    const randomShape = shapes[Math.floor(Math.random() * shapes.length)]
-    const randomType = types[Math.floor(Math.random() * types.length)]
-    const randomPxSize = pxSizes[Math.floor(Math.random() * pxSizes.length)]
-    const randomRotation = Math.floor(Math.random() * 360)
-    const randomScale = (Math.random() * 0.5 + 0.6).toFixed(2)
-
-    // Random colors for light mode
-    const lightHues = [220, 240, 280, 300, 320, 20, 40, 60]
-    const randomLightHue = lightHues[Math.floor(Math.random() * lightHues.length)]
-
-    // Random colors for dark mode
-    const darkHues = [280, 300, 320, 340, 20, 40, 120, 200]
-    const randomDarkHue = darkHues[Math.floor(Math.random() * darkHues.length)]
-
-    return {
-        shape: randomShape,
-        type: randomType,
-        pxSize: randomPxSize,
-        rotation: randomRotation,
-        scale: parseFloat(randomScale),
-        lightHue: randomLightHue,
-        darkHue: randomDarkHue,
-    }
-}
+import { generateDitheringConfig } from "@/lib/dithering"
+import type { DitheringConfig } from "@/lib/dithering"
+import { contactInfo } from "@/lib/site"
 
 export default function TechPage() {
     const { theme, setTheme } = useTheme()
     const [mounted, setMounted] = useState(false)
-    const [ditheringConfig, setDitheringConfig] = useState(generateDitheringConfig())
+    const [ditheringConfig, setDitheringConfig] = useState<DitheringConfig>(generateDitheringConfig())
 
     useEffect(() => {
         setMounted(true)
@@ -130,32 +103,32 @@ export default function TechPage() {
                             <div>
                                 <p className="opacity-60 mb-2">Email</p>
                                 <a
-                                    href="mailto:xiuwei1205@gmail.com"
+                                    href={contactInfo.emailHref}
                                     className="hover:opacity-60 transition-opacity"
                                 >
-                                    xiuwei1205@gmail.com
+                                    {contactInfo.email}
                                 </a>
                             </div>
                             <div>
                                 <p className="opacity-60 mb-2">GitHub</p>
                                 <a
-                                    href="https://github.com/LXW1205"
+                                    href={contactInfo.github}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="hover:opacity-60 transition-opacity"
                                 >
-                                    github.com/LXW1205
+                                    {contactInfo.githubDisplay}
                                 </a>
                             </div>
                             <div>
                                 <p className="opacity-60 mb-2">LinkedIn</p>
                                 <a
-                                    href="https://linkedin.com/in/xiu-wei"
+                                    href={contactInfo.linkedin}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="hover:opacity-60 transition-opacity"
                                 >
-                                    linkedin.com/in/xiu-wei
+                                    {contactInfo.linkedinDisplay}
                                 </a>
                             </div>
                         </div>

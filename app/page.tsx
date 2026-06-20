@@ -4,41 +4,13 @@ import { Dithering } from "@paper-design/shaders-react"
 import { useState, useEffect } from "react"
 import { useTheme } from "next-themes"
 import Link from "next/link"
-
-const generateDitheringConfig = () => {
-  const shapes = ["simplex", "warp", "dots", "wave", "ripple", "swirl", "sphere"] as const
-  const types = ["4x4", "8x8", "2x2", "random"] as const
-  const pxSizes = [2, 3, 4, 5]
-
-  const randomShape = shapes[Math.floor(Math.random() * shapes.length)]
-  const randomType = types[Math.floor(Math.random() * types.length)]
-  const randomPxSize = pxSizes[Math.floor(Math.random() * pxSizes.length)]
-  const randomRotation = Math.floor(Math.random() * 360)
-  const randomScale = (Math.random() * 0.5 + 0.6).toFixed(2)
-
-  // Random colors for light mode
-  const lightHues = [220, 240, 280, 300, 320, 20, 40, 60]
-  const randomLightHue = lightHues[Math.floor(Math.random() * lightHues.length)]
-
-  // Random colors for dark mode
-  const darkHues = [280, 300, 320, 340, 20, 40, 120, 200]
-  const randomDarkHue = darkHues[Math.floor(Math.random() * darkHues.length)]
-
-  return {
-    shape: randomShape,
-    type: randomType,
-    pxSize: randomPxSize,
-    rotation: randomRotation,
-    scale: parseFloat(randomScale),
-    lightHue: randomLightHue,
-    darkHue: randomDarkHue,
-  }
-}
+import { generateDitheringConfig } from "@/lib/dithering"
+import type { DitheringConfig } from "@/lib/dithering"
 
 export default function HomePage() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
-  const [ditheringConfig, setDitheringConfig] = useState(generateDitheringConfig())
+  const [ditheringConfig, setDitheringConfig] = useState<DitheringConfig>(generateDitheringConfig())
 
   useEffect(() => {
     setMounted(true)

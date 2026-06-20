@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 
 type Skill = { name: string; color: string };
@@ -100,7 +100,6 @@ function Chip({ skill, delay, isDarkMode }: { skill: Skill; delay: number; isDar
         background: defaultBg,
         fontSize: '13px',
         color: defaultText,
-        fontFamily: "'Space Mono', monospace",
         cursor: 'default',
         transition: 'opacity 0.35s ease, transform 0.35s ease, border-color 0.35s ease, background-color 0.35s ease, color 0.35s ease',
         opacity: visible ? 1 : 0,
@@ -148,12 +147,10 @@ function Dot({ color }: { color: string }) {
 export default function TechStack() {
   const { theme } = useTheme();
   const isDarkMode = theme === 'dark';
-  const scanRef = useRef<HTMLDivElement>(null);
 
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
         @keyframes tsDotPulse {
           0%, 100% { opacity: 1; transform: scale(1); }
           50%       { opacity: 0.55; transform: scale(0.75); }
@@ -164,7 +161,6 @@ export default function TechStack() {
         style={{
           position: 'relative',
           paddingBottom: '2rem',
-          fontFamily: "'Space Mono', monospace",
         }}
       >
 
